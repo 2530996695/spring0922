@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newer.dao.EmpMapper">
+
+    <select id="queryParam" resultType="com.newer.pojo.Emp">
+        select empno,ename,job,sex,hiredate,sal,comm,d.deptno,dname from
+        emp e
+        left join dept d
+        on e.deptno=d.deptno
+        <where>
+            <if test="ename!=null and ename!=''">
+                and ename like concat('%',concat(#{ename},'%'))
+            </if>
+            <if test="beginDate!=null">
+                and hiredate between #{beginDate} and #{endDate}
+            </if>
+        </where>
+
+    </select>
+
+</mapper>
